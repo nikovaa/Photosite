@@ -60,7 +60,7 @@ const loginLimiter = rateLimit({
 
 // ---------------------
 // Reitit
-// ---------------------
+// -------------------
 
 // Pääjuuri -> index.html
 app.get('/', (req, res) => {
