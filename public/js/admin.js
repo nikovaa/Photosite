@@ -53,7 +53,7 @@ async function uploadKuva(file) {
   const formData = new FormData();
   formData.append('kuva', file); // sama nimi kuin serverissä upload.single('kuva')
 
-  const resp = await fetch('http://localhost:4000/api/upload-image', {
+  const resp = await fetch('photosite-production.up.railway.app/api/upload-image', {
     method: 'POST',
     body: formData,
   });
@@ -63,7 +63,7 @@ async function uploadKuva(file) {
   }
 
   const data = await resp.json();
-  return data.url; // esim: http://localhost:4000/images/KuvausStudio.jpg
+  return data.url; // esim: photosite-production.up.railway.app/images/KuvausStudio.jpg
 }
 
 // missä kansiossa kuvat on HTML-sivusta katsottuna

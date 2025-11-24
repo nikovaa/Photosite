@@ -1,5 +1,5 @@
 // Kaikki frontti & admin käyttää samaa URLia
-const PALVELU_API_URL = 'api/palvelut';
+const PALVELU_API_URL = 'photosite-production.up.railway.app/api/palvelut';
 
 // Hae palvelut backendiltä
 async function lataaPalvelut() {

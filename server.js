@@ -81,7 +81,7 @@ app.post('/api/login', loginLimiter, (req, res) => {
 });
 
 // Kuvan upload
-app.post('/api/upload-image', upload.single('kuva'), (req, res) => {
+app.post('photosite-production.up.railway.app/api/upload-image', upload.single('kuva'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'Tiedosto puuttuu' });
   }
@@ -92,7 +92,7 @@ app.post('/api/upload-image', upload.single('kuva'), (req, res) => {
 });
 
 // Hae kaikki palvelut
-app.get('/api/palvelut', (req, res) => {
+app.get('photosite-production.up.railway.app/api/palvelut', (req, res) => {
   fs.readFile(DATA_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Lukuvirhe:', err);
@@ -110,7 +110,7 @@ app.get('/api/palvelut', (req, res) => {
 });
 
 // Tallenna KOKO lista
-app.put('/api/palvelut', (req, res) => {
+app.put('photosite-production.up.railway.app/api/palvelut', (req, res) => {
   const palvelut = req.body;
 
   if (!Array.isArray(palvelut)) {
