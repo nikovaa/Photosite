@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nettisivu</title>
+
+    <!-- Tyylit juuren css-kansiosta -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Yläpalkki -->
+    <header>
+        <h1>Niklas Photo & Print</h1>
+    </header>
+
+    <main>
+        <!-- Hero-osio -->
+        <section class="hero">
+            <h2>Valokuvaus ja kuvien tulostus</h2>
+            <p>
+                Yksinkertainen ja luotettava palvelu:
+                kuvaukset, kuvien muokkaukset ja laadukkaat tulosteet
+            </p>
+            <!-- HUOM: kansio images, ei enää Kuvat -->
+            <img src="/images/valokuvausKuva.jpg" alt="Kamera ja valokuvaus">
+            <button>Pyydä tarjous</button>
+        </section>
+
+        <!-- Palvelut -->
+        <section class="palvelut">
+            <h2>Palvelut</h2>
+
+            <div class="palvelu-rivi" id="palveluRivi">
+                <!-- JS (app.js) luo kortit tänne -->
+            </div>
+        </section>
+
+        <!-- Yhteydenotto -->
+        <section class="yhteys">
+            <h2>Ota yhteyttä</h2>
+
+            <form>
+                <div class="rivi">
+                    <label for="nimi">Nimi</label>
+                    <input id="nimi" type="text" placeholder="Etunimi ja sukunimi" required>
+                </div>
+
+                <div class="rivi">
+                    <label for="email">Sähköposti</label>
+                    <input id="email" type="email" placeholder="esimerkki@osoite.fi" required>
+                </div>
+
+                <div class="rivi">
+                    <label for="viesti">Viesti</label>
+                    <textarea id="viesti" rows="4" placeholder="Kerro mitä tarvitset"></textarea>
+                </div>
+
+                <button type="submit">Lähetä</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Niklas Photo & Print</p>
+        <p>Sähköposti: <a href="mailto:niklas.photo@email.com">niklas.photo@email.com</a></p>
+    </footer>
+
+    <!-- JS: hakee palvelut ja piirtää kortit -->
+     
+     <script src="/js/data.js" defer></script>
+    <script src="/js/app.js" defer></script>
+</body>
+</html>

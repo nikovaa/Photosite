@@ -1,0 +1,26 @@
+[
+  {
+    "id": "perus",
+    "nimi": "Normi",
+    "hinta": 100,
+    "yksikko": "€",
+    "kuvaus": "Lyhyt kuvaus, esim. 30 min kuvaus ja 10 valmista kuvaa diginä.",
+    "kuva": "../images/KuvausStudio.jpg"
+  },
+  {
+    "id": "juhla",
+    "nimi": "Juhlapaketti",
+    "hinta": 129,
+    "yksikko": "€",
+    "kuvaus": "Esim. juhlat tai tapahtuma, enemmän kuvia ja pidempi kuvausaika.",
+    "kuva": "../images/Juhlakuvaus.jpg"
+  },
+  {
+    "id": "tulostus",
+    "nimi": "Tulostuspalvelu",
+    "hinta": 10,
+    "yksikko": "€",
+    "kuvaus": "Valmiiden kuvien laadukkaat tulosteet eri kokoihin.",
+    "kuva": "../images/Tulostuspalvelu.jpg"
+  }
+]

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin kirjautuminen</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body admin-dark">
+    <div class="admin-login">
+        <h1></h1>
+        <p>Kirjaudu hallintapaneeliin.</p>
+
+        <input type="password" id="adminPassword" placeholder="Admin-salasana">
+        <button id="loginButton">Kirjaudu</button>
+
+        <p id="loginError" class="login-error"></p>
+    </div>
+
+<script>
+  const LOGIN_API_URL = 'api/login';
+
+  const passwordInput =
+   document.getElementById("adminPassword");
+  const loginButton =
+   document.getElementById("loginButton");
+  const errorText =
+   document.getElementById("loginError");
+
+  async function yritaKirjautua() {
+    const syote = passwordInput.value.trim();
+    errorText.textContent = "";
+
+    if (!syote) {
+      errorText.textContent = 'Syötä salasana.';
+      return;
+    }
+
+    try {
+      const resp = await fetch(LOGIN_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: syote })  // <-- TÄMÄ KORJATTU
+      });
+
+          // TOO MANY REQUESTS (429)
+            if (resp.status === 429) {
+          const data = await resp.json();
+          naytaCountdown(data.reset); // käynnistä ajastin
+        return;
+        }
+
+      if (!resp.ok) {
+        if (resp.status === 401) {
+          errorText.textContent = 'Väärä salasana.';
+        } else {
+          errorText.textContent = 'Kirjautuminen epäonnistui (' + resp.status + ').';
+        }
+        return;
+      }
+
+      const data = await resp.json();
+      // tallennetaan token admin-käyttöä varten
+      localStorage.setItem('adminToken', data.token);
+
+      // siirrytään admin-paneeliin
+      window.location.href = 'admin-panel-5500.html';
+    } catch (err) {
+      console.error('LOGIN VIRHE:',err);
+      errorText.textContent = 'Yhteys backendille epäonnistui.';
+    }
+  }
+
+  loginButton.addEventListener("click", yritaKirjautua);
+
+  passwordInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      yritaKirjautua();
+    }
+  });
+
+
+
+function naytaCountdown(resetTime) {
+  const errorText = document.getElementById("loginError");
+
+  function paivita() {
+    const nyt = Date.now();
+    const ero = resetTime - nyt;
+
+    if (ero <= 0) {
+      errorText.textContent = '';
+      return;
+    }
+
+    const sek = Math.floor(ero / 1000) % 60;
+    const min = Math.floor(ero / 1000 / 60);
+
+    errorText.textContent =
+      `Liian monta yritystä. Odota ${min} min ${sek} s.`;
+
+    setTimeout(paivita, 1000);
+  }
+
+  paivita();
+}
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

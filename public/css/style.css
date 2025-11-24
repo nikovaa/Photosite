@@ -1,0 +1,475 @@
+/* ============================
+   YLEISET TYYLIT
+============================ */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0078ff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0058c8;
+}
+
+
+/* ============================
+   HEADER
+============================ */
+
+header {
+    background-color: rgb(123, 35, 35);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ============================
+   HERO-OSIO
+============================ */
+
+.hero {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.hero img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+
+/* ============================
+   PALVELUT
+============================ */
+
+.palvelut {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+}
+
+.palvelut h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.palvelu-rivi {
+    display: flex;
+    gap: 20px;
+}
+
+.palvelu-kortti {
+    background-color: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    flex: 1;
+}
+
+.palvelu-kortti h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.hinta {
+    font-weight: bold;
+    color: blue;
+    margin: 5px 0;
+}
+
+.palvelu-kuva {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+
+/* ============================
+   YHTEYDENOTTOLOMAKE
+============================ */
+
+.yhteys {
+    max-width: 600px;
+    margin: 40px auto 60px;
+    padding: 20px 25px 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.yhteys h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.yhteys form .rivi {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.yhteys label {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.yhteys input,
+.yhteys textarea {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.yhteys textarea {
+    resize: vertical;
+}
+
+.yhteys button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* ============================
+   ADMIN – PERUSTYYLIT & TEEMA
+============================ */
+
+.admin-body {
+    font-family: Arial, sans-serif;
+    padding: 20px 30px;
+    min-height: 100vh;
+}
+
+/* yläpalkki + teeman nappi */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#themeToggle {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+/* LIGHT-tila */
+.admin-body.admin-light {
+    background-color: #f0f0f0;
+    color: #222;
+}
+
+.admin-body.admin-light h1,
+.admin-body.admin-light h2,
+.admin-body.admin-light h3 {
+    color: #111;
+}
+
+.admin-body.admin-light .admin-palvelu {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-body.admin-light #lisaa-form {
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.admin-body.admin-light #lisaa-form input,
+.admin-body.admin-light #lisaa-form select {
+    background: #ffffff;
+    color: #000;
+    border-color: #cccccc;
+}
+
+.admin-body.admin-light #themeToggle {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.admin-body.admin-light #themeToggle:hover {
+    background: #d0d0d0;
+}
+
+/* DARK-tila */
+.admin-body.admin-dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.admin-body.admin-dark h1,
+.admin-body.admin-dark h2,
+.admin-body.admin-dark h3 {
+    color: #ffffff;
+}
+
+.admin-body.admin-dark .admin-palvelu {
+    background-color: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.admin-body.admin-dark #lisaa-form {
+    background: #1e1e1e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.admin-body.admin-dark #lisaa-form input,
+.admin-body.admin-dark #lisaa-form select {
+    background: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+.admin-body.admin-dark #lisaa-form input::placeholder {
+    color: #888;
+}
+
+.admin-body.admin-dark #themeToggle {
+    background: #2d2d2d;
+    color: #f5f5f5;
+}
+
+.admin-body.admin-dark #themeToggle:hover {
+    background: #3a3a3a;
+}
+
+/* ============================
+   ADMIN – LOGIN
+============================ */
+
+.admin-login {
+    max-width: 380px;
+    margin: 90px auto;
+    padding: 24px 28px;
+    border-radius: 14px;
+    background-color: #1e1e1e;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    text-align: center;
+    color: #f5f5f5;
+}
+
+.admin-login h1 {
+    margin: 0 0 8px 0;
+    font-size: 26px;
+}
+
+.admin-login p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.admin-login input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    margin-bottom: 12px;
+    background: #2b2b2b;
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.admin-login input[type="password"]::placeholder {
+    color: #999;
+}
+
+.admin-login button {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 8px;
+    border: none;
+    background-color: #0078ff;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.15s;
+}
+
+.admin-login button:hover {
+    background-color: #0064d0;
+}
+
+.login-error {
+    margin-top: 10px;
+    color: #ff6b6b;
+    font-size: 13px;
+}
+
+/* ============================
+   ADMIN – PALVELULISTA & LOMAKE
+============================ */
+
+.admin-palvelu {
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.admin-palvelu img.admin-kuva {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.admin-palvelu strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.admin-palvelu small {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* nappirivi */
+.admin-palvelu button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.15s;
+}
+
+/* Muokkaa (ensimmäinen nappi nappikontissa) */
+.admin-palvelu button:nth-child(1) {
+    background: #0084ff;
+    color: white;
+}
+
+.admin-palvelu button:nth-child(1):hover {
+    background: #006ad1;
+}
+
+/* Poista (toinen nappi) */
+.admin-palvelu button:nth-child(2) {
+    background: #e53935;
+    color: white;
+    margin-left: 8px;
+}
+
+.admin-palvelu button:nth-child(2):hover {
+    background: #c62828;
+}
+
+/* Lomake */
+#lisaa-form {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#lisaa-form input,
+#lisaa-form select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    min-width: 140px;
+}
+
+#lisaa-form button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* ============================
+   FOOTER
+============================ */
+
+.footer {
+    text-align: center;
+    padding: 20px 10px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+.footer a {
+    color: #0078ff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* ============================
+   MOBIILI (MEDIA QUERY)
+============================ */
+
+@media (max-width: 768px) {
+
+    .hero {
+        margin: 20px 10px;
+        padding: 15px 15px;
+    }
+
+    .palvelut {
+        max-width: 100%;
+        margin: 20px auto;
+        padding: 0 10px 30px;
+    }
+
+    .palvelu-rivi {
+        flex-direction: column; /* kortit allekkain */
+    }
+
+    .palvelu-kortti {
+        padding: 15px 15px;
+    }
+
+    .palvelu-kuva {
+        height: 180px; /* pienempi kuva puhelimella */
+    }
+
+    .yhteys {
+        max-width: 90%;
+        margin: 20px auto 40px;
+        padding: 15px 15px 20px;
+    }
+}

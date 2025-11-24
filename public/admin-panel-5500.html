@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Palvelujen hallinta</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="admin-body admin-dark">
+  <div class="admin-header">
+    <h2>Admin Hallitse palveluita</h2>
+    <button id="themeToggle">Light-tila</button>
+  </div>
+
+  <div id="lista"></div>
+
+  <h3>Lisää uusi palvelu</h3>
+  <form id="lisaa-form">
+    <input type="text" placeholder="Nimi" id="nimi">
+    <input type="text" placeholder="Hinta" id="hinta">
+    <input type="text" placeholder="Kuvaus" id="kuvaus">
+
+    <!-- vanha dropdown (olemassa olevat kuvat) -->
+    <select id="kuva">
+      <option value="">– Valitse kuva –</option>
+      <!-- JS täyttää loput -->
+    </select>
+
+    <!-- UUSI: tiedoston valinta -->
+    <input type="file" id="kuvaTiedosto" accept="image/*">
+
+    <button type="submit">Lisää</button>
+  </form>
+  <body class="admin-body"></body>
+  <script src="/js/data.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+
+</html>
