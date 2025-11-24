@@ -23,11 +23,16 @@ async function tallennaPalvelut(palvelut, token) {
       headers['Authorization'] = 'Bearer ' + token;
     }
 
-    const resp = await fetch(PALVELU_API_URL, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify(palvelut),
-    });
+    const token = localStorage.getItem('adminToken');
+
+  const resp = await fetch(PALVELU_API_URL, {
+    method: 'PUT',
+    headers: {
+    'Content-Type': 'application/json',
+    'X-Admin-Token': token
+    },
+    body: JSON.stringify(palvelut),
+  });
 
     if (!resp.ok) {
       throw new Error('HTTP-virhe tallennuksessa: ' + resp.status);

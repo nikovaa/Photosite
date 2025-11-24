@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 4000;
 const DATA_PATH = path.join(__dirname, 'data', 'palvelut.json');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const IMAGES_DIR = path.join(PUBLIC_DIR, 'images');   // kuvat public/images
-const ADMIN_PASSWORD = '1234';                        // vaihda kun haluat
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'superadmin-token-123';
 
 // Luo images-kansion jos puuttuu
 if (!fs.existsSync(IMAGES_DIR)) {
@@ -26,19 +27,41 @@ if (!fs.existsSync(IMAGES_DIR)) {
 // ---------------------
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, IMAGES_DIR),
-  filename: (req, file, cb) => cb(null, file.originalname),
+  filename: (req, file, cb) => {
+    const safeName = Date.now() + '-' + file.originalname.replace(/\s+/g, '_');
+    cb(null, safeName);
+  }
 });
-const upload = multer({ storage });
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // max 5 MB
+  },
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Vain kuvat sallittu'));
+    }
+    cb(null, true);
+  }
+});
 
 // ---------------------
 // Middlewaret
 // ---------------------
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:5500',
+  'https://photosite-production.up.railway.app'
+];
+
+app.use(cors({
+  origin: allowedOrigins
+}));
 
 // Palvele frontti + staattiset tiedostot
 app.use(express.static(PUBLIC_DIR));
-// (tää on itse asiassa jo enough, mutta ei haittaa vaikka on erikseen vielä:)
 app.use('/images', express.static(IMAGES_DIR));
 
 // ---------------------
@@ -49,7 +72,7 @@ const loginLimiter = rateLimit({
   max: 5,                   // 5 yritystä
   handler: (req, res) => {
     const now = Date.now();
-    const resetTime = now + 15 * 60 * 1000; // koska esto loppuu
+    const resetTime = now + 15 * 60 * 1000;
 
     res.status(429).json({
       error: 'Liian monta kirjautumisyritystä.',
@@ -75,20 +98,29 @@ app.post('/api/login', loginLimiter, (req, res) => {
     return res.status(401).json({ error: 'Väärä salasana' });
   }
 
-  // oikeassa projektissa tekisit JWT:n tms.
-  const token = 'dummy-admin-token';
+  const token = ADMIN_TOKEN;
   res.json({ token });
 });
 
+// Middleware tokenille
+function requireAdmin(req, res, next) {
+  const token = req.headers['x-admin-token'];
+
+  if (!token || token !== ADMIN_TOKEN) {
+    return res.status(401).json({ error: 'Ei oikeutta (admin-token puuttuu)' });
+  }
+
+  next();
+}
+
 // Kuvan upload
-app.post('/api/upload-image', upload.single('kuva'), (req, res) => {
+app.post('/api/upload-image', requireAdmin, upload.single('kuva'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'Tiedosto puuttuu' });
   }
 
-  // HUOM: ei hardkoodattua localhostia -> relativen polku riittää
-  const publicUrl = `/images/${req.file.filename}`;
-  res.json({ url: publicUrl });
+  const publicPath = `/images/${req.file.filename}`;
+  res.json({ url: publicPath });
 });
 
 // Hae kaikki palvelut
@@ -110,7 +142,7 @@ app.get('/api/palvelut', (req, res) => {
 });
 
 // Tallenna KOKO lista
-app.put('/api/palvelut', (req, res) => {
+app.put('/api/palvelut', requireAdmin, (req, res) => {
   const palvelut = req.body;
 
   if (!Array.isArray(palvelut)) {
@@ -129,6 +161,15 @@ app.put('/api/palvelut', (req, res) => {
       res.json({ ok: true });
     }
   );
+});
+
+// Multer / upload -virheet
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError || err.message === 'Vain kuvat sallittu') {
+    return res.status(400).json({ error: err.message });
+  }
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Serverivirhe' });
 });
 
 // ---------------------
