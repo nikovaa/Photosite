@@ -4,13 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const rateLimit = require('express-rate-limit');
+const { getPalvelut, savePalvelut } = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ---------------------
 // Vakiot
-// ---------------------
 const DATA_PATH = path.join(__dirname, 'data', 'palvelut.json');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const IMAGES_DIR = path.join(PUBLIC_DIR, 'images');   // kuvat public/images
@@ -124,43 +123,31 @@ app.post('/api/upload-image', requireAdmin, upload.single('kuva'), (req, res) =>
 });
 
 // Hae kaikki palvelut
-app.get('/api/palvelut', (req, res) => {
-  fs.readFile(DATA_PATH, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Lukuvirhe:', err);
-      return res.status(500).json({ error: 'Virhe palveluiden luvussa' });
-    }
-
-    try {
-      const json = JSON.parse(data || '[]');
-      res.json(json);
-    } catch (parseErr) {
-      console.error('JSON-virhe:', parseErr);
-      res.status(500).json({ error: 'Virhe datan muodossa' });
-    }
-  });
+app.get('/api/palvelut', async (req, res) => {
+  try {
+    const palvelut = await getPalvelut();   // db.js
+    res.json(palvelut);
+  } catch (err) {
+    console.error('DB-virhe haussa:', err);
+    res.status(500).json({ error: 'Virhe palveluiden luvussa' });
+  }
 });
 
 // Tallenna KOKO lista
-app.put('/api/palvelut', requireAdmin, (req, res) => {
+app.put('/api/palvelut', requireAdmin, async (req, res) => {
   const palvelut = req.body;
 
   if (!Array.isArray(palvelut)) {
     return res.status(400).json({ error: 'Odotettiin arrayta' });
   }
 
-  fs.writeFile(
-    DATA_PATH,
-    JSON.stringify(palvelut, null, 2),
-    'utf8',
-    (err) => {
-      if (err) {
-        console.error('Kirjoitusvirhe:', err);
-        return res.status(500).json({ error: 'Virhe tallennuksessa' });
-      }
-      res.json({ ok: true });
-    }
-  );
+  try {
+    await savePalvelut(palvelut);  // db.js
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('DB-virhe tallennuksessa:', err);
+    res.status(500).json({ error: 'Virhe tallennuksessa'  });
+  }
 });
 
 // Multer / upload -virheet
